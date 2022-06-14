@@ -5,8 +5,14 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D playerRb;
-    [SerializeField] private float movementspeed;
+    [SerializeField] readonly float movementspeed;
+    [SerializeField] readonly float gravityspeed;
+    
 
+    void Start()
+    {
+        Invoke("NewGravity", 0.7f);
+    }
     void Update()
     {
         playerRb.velocity = transform.right*movementspeed*Time.fixedDeltaTime;
@@ -15,5 +21,10 @@ public class PlayerController : MonoBehaviour
         {
             playerRb.gravityScale = -1*playerRb.gravityScale;
         }
+    }
+
+    void NewGravity()
+    {
+        playerRb.gravityScale = gravityspeed;
     }
 }
