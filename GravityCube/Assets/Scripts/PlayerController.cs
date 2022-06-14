@@ -5,9 +5,19 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D playerRb;
-    [SerializeField] readonly float movementspeed;
-    [SerializeField] readonly float gravityspeed;
-    
+    [SerializeField] private float movementspeed;
+    [SerializeField] private float gravityspeed;
+
+
+    public void SetMovementSpeed(float newone)
+    {
+        movementspeed = newone;
+    }    
+    public void SetGravitySpeed(float newone)
+    {
+        playerRb.gravityScale = newone;
+    } 
+
 
     void Start()
     {

@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Death : MonoBehaviour
 {
-    [SerializeField] private GameObject gameobject;
+    [SerializeField] private PlayerController pc;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "Player")
-        {
-            gameobject.transform.position = new Vector3(0,0,0);
+        {   
+            pc.SetGravitySpeed(0);
+            pc.SetMovementSpeed(0);
             Debug.Log("!!!!");
         }
     }

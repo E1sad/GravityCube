@@ -219,7 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 553cb4ab68e64824cbb5a2179c3f42aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameobject: {fileID: 894180853}
+  pc: {fileID: 894180854}
 --- !u!68 &502427653
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -245,11 +245,17 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
---- !u!1 &894180853 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7440786519469476800, guid: 6a5e898d26ba6804eb0d0c0c71b8d675, type: 3}
+--- !u!114 &894180854 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7440786519469476803, guid: 6a5e898d26ba6804eb0d0c0c71b8d675, type: 3}
   m_PrefabInstance: {fileID: 7440786519682602549}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bee66f5befd65e14f9f7bdf6acdbbfff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2105292042
 GameObject:
   m_ObjectHideFlags: 0
