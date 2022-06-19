@@ -5,36 +5,31 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D playerRb;
-    [SerializeField] private float movementspeed;
+    [SerializeField] private GameManager gameManager;
     [SerializeField] private float gravityspeed;
-
-
-    public void SetMovementSpeed(float newone)
-    {
-        movementspeed = newone;
-    }    
-    public void SetGravitySpeed(float newone)
-    {
-        playerRb.gravityScale = newone;
-    } 
-
+    [SerializeField] private float movementspeed;
 
     void Start()
     {
-        Invoke("NewGravity", 0.7f);
+        Application.targetFrameRate = 60;
     }
+
     void Update()
     {
-        playerRb.velocity = transform.right*movementspeed*Time.fixedDeltaTime;
+        
 
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            playerRb.gravityScale = -1*playerRb.gravityScale;
+            //playerRb.gravityScale = -1*playerRb.gravityScale;
+            gravityspeed = -1 * gravityspeed;
         }
+        playerRb.velocity = (transform.right * movementspeed + transform.up*gravityspeed) * Time.fixedDeltaTime;
     }
 
-    void NewGravity()
+    public void OnCollisionEnter2D(Collision2D collision)
     {
-        playerRb.gravityScale = gravityspeed;
+        gameManager.GameOver();
     }
+
+
 }
