@@ -7,11 +7,13 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private string bestScoreKey;
-    [SerializeField] GameObject menuCanvas, gameOverCanvas, gamePlayCanvas, textStart, player;
+    [SerializeField] GameObject menuCanvas, gameOverCanvas, gamePlayCanvas, textStart, player, ObstaclePrefab;
     [SerializeField] Rigidbody2D playerRb;
     [SerializeField] PlayerController playerScript;
     [SerializeField] TextMeshProUGUI ScoreText, gameOverScore, gameOverBestScore;
+    private float obstacleX = 3f, obstacleY = -0.6f, playerX;
     private int newScore;
+    
 
     void Start()
     {
@@ -23,6 +25,7 @@ public class GameManager : MonoBehaviour
     {
         CheckIfGameStart();
         Score();
+        CreateRandomObstacle();
     }
     
     void CheckIfGameStart()
@@ -81,5 +84,12 @@ public class GameManager : MonoBehaviour
             gameOverScore.text = "Score: " + newScore;
             gameOverBestScore.text = "Best: " + bestScore;
         }
+    }
+
+    //Random Obstacles
+    void CreateRandomObstacle()
+    {
+        Instantiate(ObstaclePrefab, new Vector2(obstacleX,obstacleY), Quaternion.identity);
+        obstacleX += 6;
     }
 }
