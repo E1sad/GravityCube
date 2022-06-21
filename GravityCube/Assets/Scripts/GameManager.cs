@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-
-    [SerializeField] GameObject menuCanvas, gameOverCanvas, gamePlayCanvas;
+    private string bestScoreKey;
+    [SerializeField] GameObject menuCanvas, gameOverCanvas, gamePlayCanvas, textStart, player;
     [SerializeField] Rigidbody2D playerRb;
-    //[SerializeField] private float gravityspeed;
-    //[SerializeField] private float movementspeed;
+    [SerializeField] PlayerController playerScript;
+    [SerializeField] TextMeshProUGUI ScoreText, gameOverScore, gameOverBestScore;
+    private int newScore;
 
     void Start()
     {
@@ -19,6 +22,7 @@ public class GameManager : MonoBehaviour
     void FixedUpdate()
     {
         CheckIfGameStart();
+        Score();
     }
     
     void CheckIfGameStart()
@@ -26,15 +30,17 @@ public class GameManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space) && playerRb.bodyType == RigidbodyType2D.Static)
         {
             playerRb.bodyType = RigidbodyType2D.Dynamic;
-
+            textStart.SetActive(false);
         }
     }
 
     public void GamePlay()
-    { 
+    {
+        player.transform.position = new Vector2(0, 0);
         menuCanvas.SetActive(false);
         gameOverCanvas.SetActive(false);
         gamePlayCanvas.SetActive(true);
+        playerScript.SetScore(0);
     }
 
     public void GameOver()
@@ -43,6 +49,7 @@ public class GameManager : MonoBehaviour
         gameOverCanvas.SetActive(true);
         gamePlayCanvas.SetActive(false);
         playerRb.bodyType = RigidbodyType2D.Static;
+        BestScore();
     }
 
     public void Menu()
@@ -53,5 +60,26 @@ public class GameManager : MonoBehaviour
         gamePlayCanvas.SetActive(false);
     }
 
+    void Score()
+    {
+        ScoreText.text = "" + playerScript.GetScore();
+        newScore = playerScript.GetScore();
+    }
 
+    void BestScore()
+    {
+        int bestScore = PlayerPrefs.GetInt(bestScoreKey);
+        if(newScore > bestScore)
+        {
+            bestScore = newScore;
+            PlayerPrefs.SetInt(bestScoreKey, bestScore);
+            gameOverScore.text = "Score: " + newScore;
+            gameOverBestScore.text = "Best: " + bestScore;
+        }
+        else
+        {
+            gameOverScore.text = "Score: " + newScore;
+            gameOverBestScore.text = "Best: " + bestScore;
+        }
+    }
 }

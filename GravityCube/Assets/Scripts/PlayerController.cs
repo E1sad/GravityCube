@@ -8,6 +8,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameManager gameManager;
     [SerializeField] private float gravityspeed;
     [SerializeField] private float movementspeed;
+    private int score = 0;
+
+    public int GetScore()
+    {
+        return score;
+    }
+    public void SetScore(int newscore)
+    {
+        score = newscore;
+    }
 
     void Start()
     {
@@ -16,13 +26,11 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        
-
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            //playerRb.gravityScale = -1*playerRb.gravityScale;
             gravityspeed = -1 * gravityspeed;
         }
+        if(playerRb.bodyType == RigidbodyType2D.Dynamic)
         playerRb.velocity = (transform.right * movementspeed + transform.up*gravityspeed) * Time.fixedDeltaTime;
     }
 
@@ -30,6 +38,9 @@ public class PlayerController : MonoBehaviour
     {
         gameManager.GameOver();
     }
-
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        score += 1;
+    }
 
 }
