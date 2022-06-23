@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuCanvas, gameOverCanvas, gamePlayCanvas, textStart, player, ObstaclePrefab;
     [SerializeField] Rigidbody2D playerRb;
     [SerializeField] PlayerController playerScript;
-    [SerializeField] TextMeshProUGUI ScoreText, gameOverScore, gameOverBestScore;
+    [SerializeField] TextMeshProUGUI ScoreText, gameOverScore, gameOverBestScore, textStartMobile;
     private float obstacleX = 3f, obstacleY = -0.6f, playerX;
     private int newScore,randomNum;
     private GameObject forDestroy;
@@ -33,11 +33,25 @@ public class GameManager : MonoBehaviour
 
     void CheckIfGameStart()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && playerRb.bodyType == RigidbodyType2D.Static)
+        if (!Application.isMobilePlatform)
         {
-            playerRb.bodyType = RigidbodyType2D.Dynamic;
-            textStart.SetActive(false);
+            if (Input.GetKeyDown(KeyCode.Space) && playerRb.bodyType == RigidbodyType2D.Static)
+            {
+                playerRb.bodyType = RigidbodyType2D.Dynamic;
+                textStart.SetActive(false);
+            }
         }
+        else
+        {
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Began && playerRb.bodyType == RigidbodyType2D.Static)
+            {
+                textStartMobile.text = "Tap to Start";
+                playerRb.bodyType = RigidbodyType2D.Dynamic;
+                textStart.SetActive(false);
+            }
+        }
+
     }
 
     public void GamePlay()

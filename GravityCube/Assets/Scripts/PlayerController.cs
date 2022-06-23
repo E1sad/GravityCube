@@ -26,9 +26,20 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (!Application.isMobilePlatform)
         {
-            gravityspeed = -1 * gravityspeed;
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                gravityspeed = -1 * gravityspeed;
+            }
+        }
+        else
+        {
+            Touch touch = Input.GetTouch(0);
+            if(touch.phase == TouchPhase.Began)
+            {
+                gravityspeed = -1 * gravityspeed;
+            }
         }
         if(playerRb.bodyType == RigidbodyType2D.Dynamic)
         playerRb.velocity = (transform.right * movementspeed + transform.up*gravityspeed) * Time.fixedDeltaTime;

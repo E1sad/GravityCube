@@ -1485,7 +1485,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &976425405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1608,6 +1608,7 @@ MonoBehaviour:
   ScoreText: {fileID: 1928377528}
   gameOverScore: {fileID: 1866199952}
   gameOverBestScore: {fileID: 161728022}
+  textStartMobile: {fileID: 750208646}
 --- !u!4 &1024778322
 Transform:
   m_ObjectHideFlags: 0
@@ -1895,7 +1896,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1276662514
 RectTransform:
   m_ObjectHideFlags: 0
