@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI ScoreText, gameOverScore, gameOverBestScore;
     private float obstacleX = 3f, obstacleY = -0.6f, playerX;
     private int newScore,randomNum;
+    private GameObject forDestroy;
+    private GameObject[] DestroyOld;
     
 
     void Start()
@@ -25,11 +27,8 @@ public class GameManager : MonoBehaviour
     {
         CheckIfGameStart();
         Score();
-        
-    }
-    void Update()
-    {
         CreateRandomObstacle();
+        DestroyObstacle();
     }
 
     void CheckIfGameStart()
@@ -43,6 +42,14 @@ public class GameManager : MonoBehaviour
 
     public void GamePlay()
     {
+        if (DestroyOld.Length > 0)
+        {
+            for (int i = 0; i < DestroyOld.Length; i++)
+            {
+                Destroy(DestroyOld[i]);
+            }
+        }
+        obstacleX = 3f;
         player.transform.position = new Vector2(0, 0);
         menuCanvas.SetActive(false);
         gameOverCanvas.SetActive(false);
@@ -109,5 +116,15 @@ public class GameManager : MonoBehaviour
             }
             obstacleX += 7;
         }
+    }
+
+    void DestroyObstacle()
+    {
+        forDestroy = GameObject.FindGameObjectWithTag("Obstacle"); 
+        DestroyOld = GameObject.FindGameObjectsWithTag("Obstacle");
+        if (player.transform.position.x - forDestroy.transform.position.x > 10 && forDestroy != null)
+        {
+            Destroy(forDestroy);
+        } 
     }
 }
