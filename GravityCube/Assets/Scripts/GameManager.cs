@@ -7,11 +7,11 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private string bestScoreKey;
-    [SerializeField] GameObject menuCanvas, gameOverCanvas, gamePlayCanvas, textStart, player, ObstaclePrefab;
+    [SerializeField] GameObject gameOverCanvas, gamePlayCanvas, textStart, player, ObstaclePrefab;
     [SerializeField] Rigidbody2D playerRb;
     [SerializeField] PlayerController playerScript;
     [SerializeField] TextMeshProUGUI ScoreText, gameOverScore, gameOverBestScore, textStartMobile;
-    private float obstacleX = 3f, obstacleY = -0.6f, playerX;
+    private float obstacleX = 8f, obstacleY = -0.6f, playerX;
     private int newScore,randomNum;
     private GameObject forDestroy;
     private GameObject[] DestroyOld;
@@ -19,7 +19,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Menu();
+        CreateRandomObstacle();
+        obstacleX += 7f;
+        playerRb.bodyType = RigidbodyType2D.Static;
         Time.timeScale = 1;
     }
 
@@ -27,7 +29,7 @@ public class GameManager : MonoBehaviour
     {
         CheckIfGameStart();
         Score();
-        CreateRandomObstacle();
+        CreateObstacle();
         DestroyObstacle();
     }
 
@@ -46,7 +48,6 @@ public class GameManager : MonoBehaviour
             Touch touch = Input.GetTouch(0);
             if (touch.phase == TouchPhase.Began && playerRb.bodyType == RigidbodyType2D.Static)
             {
-                textStartMobile.text = "Tap to Start";
                 playerRb.bodyType = RigidbodyType2D.Dynamic;
                 textStart.SetActive(false);
             }
@@ -63,17 +64,16 @@ public class GameManager : MonoBehaviour
                 Destroy(DestroyOld[i]);
             }
         }
-        obstacleX = 3f;
-        player.transform.position = new Vector2(0, 0);
-        menuCanvas.SetActive(false);
+        //obstacleX = 3f;
+        //player.transform.position = new Vector2(0, 0);
+        SceneManager.LoadScene(1);
         gameOverCanvas.SetActive(false);
         gamePlayCanvas.SetActive(true);
-        playerScript.SetScore(0);
+        //playerScript.SetScore(0);
     }
 
     public void GameOver()
     {
-        menuCanvas.SetActive(false);
         gameOverCanvas.SetActive(true);
         gamePlayCanvas.SetActive(false);
         playerRb.bodyType = RigidbodyType2D.Static;
@@ -82,10 +82,7 @@ public class GameManager : MonoBehaviour
 
     public void Menu()
     {
-        playerRb.bodyType = RigidbodyType2D.Static;
-        menuCanvas.SetActive(true);
-        gameOverCanvas.SetActive(false);
-        gamePlayCanvas.SetActive(false);
+        SceneManager.LoadScene(0);
     }
 
     void Score()
@@ -112,23 +109,28 @@ public class GameManager : MonoBehaviour
     }
 
     //Random Obstacles
-    void CreateRandomObstacle()
+    void CreateObstacle()
     {
         playerX = player.transform.position.x;
         if (playerX-obstacleX > -5)
         {
-            randomNum = Random.Range(0, 2);
-            if (randomNum == 0)
-            {
-                obstacleY = -0.6f;
-                Instantiate(ObstaclePrefab, new Vector2(obstacleX, obstacleY), Quaternion.identity);
-            }
-            if (randomNum == 1)
-            {
-                obstacleY = 0.6f;
-                Instantiate(ObstaclePrefab, new Vector2(obstacleX, obstacleY), Quaternion.Euler(0f,0f,180f));
-            }
-            obstacleX += 7;
+            CreateRandomObstacle();
+            obstacleX += 7f;
+        }
+    }
+
+    void CreateRandomObstacle()
+    {
+        randomNum = Random.Range(0, 2);
+        if (randomNum == 0)
+        {
+            obstacleY = -0.6f;
+            Instantiate(ObstaclePrefab, new Vector2(obstacleX, obstacleY), Quaternion.identity);
+        }
+        if (randomNum == 1)
+        {
+            obstacleY = 0.6f;
+            Instantiate(ObstaclePrefab, new Vector2(obstacleX, obstacleY), Quaternion.Euler(0f, 0f, 180f));
         }
     }
 
